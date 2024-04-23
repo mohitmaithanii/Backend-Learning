@@ -6,10 +6,10 @@ const app = express(); // Initialize an Express.js application
 
 // Enable Cross-Origin Resource Sharing (CORS) with credentials
 app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  })
+    cors({
+        origin: process.env.CORS_ORIGIN,
+        credentials: true,
+    })
 );
 
 // Parse JSON request bodies with a limit of 16KB
@@ -23,5 +23,13 @@ app.use(express.static("public"));
 
 // Parse and serialize cookies
 app.use(cookieParser());
+
+//* Routes
+import userRouter from "./routes/user.routes.js";
+
+//* routes declaration
+app.use("/api/v1/users", userRouter);
+
+// http://localhost:8000/api/v1/users/register
 
 export { app };
