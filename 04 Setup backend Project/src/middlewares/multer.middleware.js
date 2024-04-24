@@ -13,5 +13,4 @@ const storage = multer.diskStorage({
     },
 });
 
-// exporting the multer object with the specified storage configuration
 export const upload = multer({ storage });
