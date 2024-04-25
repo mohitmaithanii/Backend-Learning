@@ -5,20 +5,20 @@ import { app } from "./app.js";
 
 // Configure dotenv to load environment variables from.env file
 dotenv.config({
-  path: "./env",
+    path: "./.env",
 });
 
 // Connect to the database using the connectDB function imported from./database/index.js
 connectDB()
-  .then((result) => {
-    // Start the server and listen on the specified port
-    app.listen(process.env.PORT || 8000, () => {
-      console.log(`SERVER IS RUNNING AT PORT : ${process.env.PORT}`);
+    .then((result) => {
+        // Start the server and listen on the specified port
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`SERVER IS RUNNING AT PORT : ${process.env.PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.log("MONGO DB CONNECTION FAILED!! ", error);
     });
-  })
-  .catch((error) => {
-    console.log("MONGO DB CONNECTION FAILED!! ", error);
-  });
 
 /* 
 * Alternative approach using async/await:
