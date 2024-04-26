@@ -22,6 +22,7 @@ const generateAccessAndRefreshToken = async (userId) => {
     }
 };
 
+//* Register User
 const registerUser = asyncHandler(async (req, res) => {
     // 1. get user details from frontend
 
@@ -100,6 +101,7 @@ const registerUser = asyncHandler(async (req, res) => {
         );
 });
 
+//* Login User
 const loginUser = asyncHandler(async (req, res) => {
     // 1. req body - data
     const { email, username, password } = req.body;
@@ -157,4 +159,30 @@ const loginUser = asyncHandler(async (req, res) => {
         );
 });
 
-export { registerUser, loginUser };
+//* Logout User
+const logoutUser = asyncHandler(async (req, res) => {
+    User.findByIdAndUpdate(
+        req.use._id,
+        {
+            $set: {
+                refreshToken: undefined,
+            },
+        },
+        {
+            new: true,
+        }
+    );
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(200)
+        .clearCookie("accessToken")
+        .clearCookie("refreshToken")
+        .json(new ApiResponse(200, {}, "User logged Out."));
+});
+
+export { registerUser, loginUser, logoutUser };
